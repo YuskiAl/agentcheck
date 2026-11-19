@@ -17,6 +17,7 @@
     <nav class="nav" aria-label="Primary">
       <a href="#how-it-works">How it works</a>
       <a href="#leaderboard">Leaderboard</a>
+      <a href="#agent-skill">For agents</a>
       <a href="https://bscscan.com/address/0x69951ec1e92d9dC5C587cdD672006C04ef32e3D7" target="_blank" rel="noopener">Contract</a>
     </nav>
     <button id="connect-btn" class="btn primary js-connect" type="button">Connect wallet</button>
@@ -110,12 +111,58 @@
     <div class="table-wrap">
       <table>
         <thead>
-          <tr><th scope="col">#</th><th scope="col">Wallet</th><th scope="col" class="num">Streak</th><th scope="col" class="num">Points</th></tr>
+          <tr><th scope="col">#</th><th scope="col">Wallet</th><th scope="col" class="num">Streak</th><th scope="col" class="num">Points</th><th scope="col">Badges</th></tr>
         </thead>
         <tbody id="leaderboard-body">
-          <tr><td colspan="4" class="muted">Loading…</td></tr>
+          <tr><td colspan="5" class="muted">Loading…</td></tr>
         </tbody>
       </table>
+    </div>
+  </section>
+
+  <section class="panel mission-panel" id="daily-mission" aria-labelledby="mission-title">
+    <div class="section-head">
+      <h2 id="mission-title">Daily Mission</h2>
+      <p class="muted" id="mission-date">—</p>
+    </div>
+    <p class="mission-name" id="mission-name">—</p>
+    <p class="muted" id="mission-desc">—</p>
+    <p class="muted mission-note">Missions are for fun and for sharing — they never change your points. Only genuine daily check-ins count.</p>
+  </section>
+
+  <section class="panel passport-panel" id="passport" aria-labelledby="passport-title">
+    <div class="section-head">
+      <h2 id="passport-title">Your Agent Passport</h2>
+      <p class="muted">Your on-chain identity card — streak, total check-ins and rank, read live from the contract. Share it to bring more agents in.</p>
+    </div>
+    <p id="passport-empty" class="muted">Connect your wallet to see your passport.</p>
+    <div id="passport-card" class="passport-card hidden">
+      <div class="passport-head"><span><span class="brand-mark" aria-hidden="true"></span> AgentCheck Passport</span><span id="passport-rank-badge"></span></div>
+      <dl class="passport-meta">
+        <div><dt>Wallet</dt><dd><code id="passport-address">—</code></dd></div>
+        <div><dt>Agent ID</dt><dd id="passport-agent">—</dd></div>
+      </dl>
+      <div class="cards">
+        <div class="card">
+          <div class="label">Current streak (days)</div>
+          <div class="value" id="passport-streak">—</div>
+        </div>
+        <div class="card">
+          <div class="label">Total check-ins</div>
+          <div class="value" id="passport-total">—</div>
+        </div>
+        <div class="card">
+          <div class="label">Points</div>
+          <div class="value" id="passport-points">—</div>
+        </div>
+        <div class="card">
+          <div class="label">Leaderboard rank</div>
+          <div class="value" id="passport-rank">—</div>
+        </div>
+      </div>
+      <div class="passport-actions">
+        <a id="share-x-btn" class="btn" href="https://x.com/intent/post?text=I%20check%20in%20every%20day%20on%20AgentCheck%20%E2%80%94%20daily%20check-in%20for%20Agent%20ID%20holders.%20https%3A%2F%2Fagentcheck-hazel.vercel.app%2F%20%23BinanceWalletHackathon%20%23AgenticWallet" target="_blank" rel="noopener">Share on X</a>
+      </div>
     </div>
   </section>
 
@@ -141,6 +188,20 @@
         </ol>
       </div>
     </div>
+  </section>
+
+  <section class="panel" id="agent-skill" aria-labelledby="skill-title">
+    <div class="section-head">
+      <h2 id="skill-title">Check in with the AgentCheck Skill</h2>
+      <p class="muted">A skill package for AI agents: install it once, and your agent knows how to check you in every day — Developer Mode check, today’s status, preview, your confirmation, then execute and verify. Same safety rules as the prompt below: preview first, nothing executes without your confirmation.</p>
+    </div>
+    <div class="skill-links">
+      <button id="copy-skill-btn" class="btn primary" type="button">Copy skill</button>
+      <a href="https://github.com/YuskiAl/agentcheck/blob/main/skill/SKILL.md" target="_blank" rel="noopener">View SKILL.md on GitHub</a>
+      <a href="https://github.com/YuskiAl/agentcheck/blob/main/skill/skill.json" target="_blank" rel="noopener">skill.json</a>
+    </div>
+    <p id="copy-skill-status" class="copy-status" role="status" aria-live="polite"></p>
+    <p class="muted">Install: give your agent the skill file, or point it at the GitHub links above. Works with Binance AI Pro, Claude, Codex, or any agent with the official Binance Skills.</p>
   </section>
 
   <section class="panel agent-panel" id="agent-guide" aria-labelledby="agent-title">

@@ -329,7 +329,7 @@ h3 { font-size: 18px; letter-spacing: -0.01em; margin: 0 0 8px; }
 
 .table-wrap { overflow-x: auto; margin: 0 -4px; padding: 0 4px; }
 
-table { width: 100%; border-collapse: collapse; min-width: 420px; }
+table { width: 100%; border-collapse: collapse; min-width: 560px; }
 th, td {
   text-align: left;
   padding: 11px 8px;
@@ -434,6 +434,88 @@ tr.me td:first-child { border-left: 3px solid var(--accent); }
 
 .copy-status { margin: 0; color: #8fd6ae; font-size: 14px; font-weight: 600; }
 .copy-status:empty { display: none; }
+
+/* ---------- Daily mission ---------- */
+
+.mission-name {
+  font-size: 20px;
+  font-weight: 800;
+  letter-spacing: -0.01em;
+  margin: 0 0 6px;
+}
+.mission-note { font-size: 14px; margin-bottom: 0; }
+
+/* ---------- Streak badges (leaderboard) ---------- */
+
+.badge-chip {
+  display: inline-block;
+  font-size: 12px;
+  font-weight: 700;
+  line-height: 1;
+  padding: 5px 9px;
+  border-radius: 999px;
+  background: var(--ok-bg);
+  color: var(--ok);
+  border: 1px solid rgba(21, 115, 71, 0.25);
+  margin: 2px 4px 2px 0;
+  white-space: nowrap;
+}
+.badge-chip.badge-30 {
+  background: var(--warn-bg);
+  color: var(--warn);
+  border-color: rgba(138, 90, 0, 0.3);
+}
+
+/* ---------- Agent passport ---------- */
+
+.passport-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 8px;
+  font-size: 18px;
+  font-weight: 800;
+  letter-spacing: -0.01em;
+  margin-bottom: 12px;
+}
+.passport-head .brand-mark {
+  display: inline-block;
+  width: 12px;
+  height: 12px;
+  background: var(--accent);
+  border-radius: 3px;
+  transform: rotate(45deg);
+  margin-right: 8px;
+  vertical-align: baseline;
+}
+#passport-rank-badge {
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--warn);
+}
+.passport-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 32px;
+  margin: 0 0 4px;
+}
+.passport-meta > div { display: flex; gap: 8px; align-items: baseline; }
+.passport-meta dt { color: var(--muted); font-size: 14px; font-weight: 600; }
+.passport-meta dd { margin: 0; font-size: 15px; }
+.passport-meta code { font-size: 14px; }
+.passport-actions { margin-top: 8px; }
+
+/* ---------- Agent skill ---------- */
+
+.skill-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  align-items: center;
+  margin: 16px 0 4px;
+}
+.skill-links a { font-weight: 600; }
 
 /* ---------- Footer ---------- */
 
