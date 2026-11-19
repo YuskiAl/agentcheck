@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AgentCheck — Daily Check-in for Agent ID Holders</title>
+<meta name="description" content="AgentCheck: a daily on-chain check-in for Binance Agent ID holders. Build a streak, earn points. Check-in is free — only gas.">
+<link rel="stylesheet" href="style.css">
+<script src="vendor/ethers.umd.min.js"></script>
+<script src="config.js"></script>
+<script src="app.js" defer></script>
+</head>
+<body>
+<header class="top">
+  <div class="brand">AgentCheck</div>
+  <button id="connect-btn" class="btn primary">Connect wallet</button>
+</header>
+
+<main>
+  <section class="hero">
+    <h1>Daily check-in for Agent ID holders</h1>
+    <p class="sub">Hold an Agent ID, check in once a day, build your streak and earn points.
+      Check-in is free — you only pay network gas.</p>
+    <p id="status" class="status">Connect your wallet to see your streak.</p>
+    <p id="tx-link" class="tx-link"></p>
+  </section>
+
+  <section class="cards">
+    <div class="card">
+      <div class="label">Total Agent ID holders checked in</div>
+      <div class="value" id="stat-users">—</div>
+    </div>
+    <div class="card">
+      <div class="label">Total check-ins</div>
+      <div class="value" id="stat-checkins">—</div>
+    </div>
+    <div class="card">
+      <div class="label">Contract</div>
+      <div class="value small" id="contract-address">Not deployed yet</div>
+    </div>
+  </section>
+
+  <section id="user-panel" class="panel hidden">
+    <h2>Your check-in</h2>
+    <p>Wallet: <code id="wallet-address">—</code></p>
+    <p>Agent ID status: <span id="agent-status">—</span></p>
+    <div class="cards">
+      <div class="card">
+        <div class="label">Current streak (days)</div>
+        <div class="value" id="user-streak">—</div>
+      </div>
+      <div class="card">
+        <div class="label">Points</div>
+        <div class="value" id="user-points">—</div>
+      </div>
+      <div class="card">
+        <div class="label">Total check-ins</div>
+        <div class="value" id="user-total">—</div>
+      </div>
+    </div>
+    <button id="checkin-btn" class="btn primary big" disabled>Check in now</button>
+    <p class="muted">Rules: one check-in per wallet per UTC day. Check in on consecutive
+      days to grow your streak. Every 7-day streak earns a +5 point bonus.
+      Your wallet always asks you to confirm the transaction — nothing is
+      ever sent without your approval.</p>
+  </section>
+
+  <section class="panel">
+    <h2>Leaderboard</h2>
+    <p class="muted">Ranked by points, then by streak. Built from on-chain check-in events.</p>
+    <table>
+      <thead>
+        <tr><th>#</th><th>Wallet</th><th>Streak</th><th>Points</th></tr>
+      </thead>
+      <tbody id="leaderboard-body">
+        <tr><td colspan="4" class="muted">Loading…</td></tr>
+      </tbody>
+    </table>
+  </section>
+
+  <section class="panel">
+    <h2>How it works</h2>
+    <ol>
+      <li>Claim an Agent ID in the Binance app (Wallet &gt; Agent ID). One per user, non-transferable.</li>
+      <li>Connect your wallet here. The page reads your Agent ID directly from the Agent ID contract on BNB Chain.</li>
+      <li>Press “Check in now” and confirm in your wallet. The contract records your streak and points on-chain.</li>
+      <li>Come back every day. Miss a day and your streak restarts at 1.</li>
+    </ol>
+    <p class="muted">AgentCheck holds no funds and collects no personal data. There is no
+      server, no login, and no QR code sign-in. The contract has no payable
+      functions and no withdrawal function. The only owner permission is
+      pause/unpause for emergencies — see the README for the full disclosure.</p>
+  </section>
+</main>
+
+<footer>
+  <p>AgentCheck — built for the Agent ID Hackathon. Not affiliated with Binance.
+    Check-in costs only network gas; no returns or rewards are promised.</p>
+</footer>
+</body>
+</html>
