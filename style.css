@@ -57,6 +57,74 @@ a { color: var(--accent); }
   background: var(--ok);
 }
 
+.steps {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 12px;
+  margin: 20px 0;
+}
+
+.step {
+  display: flex;
+  gap: 12px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 14px;
+}
+
+.step-n {
+  flex: none;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: var(--accent);
+  color: var(--accent-text);
+  font-weight: 800;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.step strong { display: block; margin-bottom: 2px; }
+.step div span { color: var(--muted); font-size: 13px; }
+
+.options {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 12px;
+  margin: 20px 0;
+}
+
+.option {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 20px;
+}
+
+.option h2 { margin-top: 0; font-size: 19px; }
+.option .btn { margin-top: 8px; }
+
+.prompt-block {
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 14px;
+  margin: 12px 0;
+}
+
+.prompt-block pre {
+  white-space: pre-wrap;
+  word-break: break-word;
+  font-size: 13px;
+  line-height: 1.5;
+  margin: 0 0 12px;
+}
+
+.panel h3 { margin-bottom: 4px; }
+.panel ol { margin-top: 6px; }
+
 main { max-width: 860px; margin: 0 auto; padding: 24px 16px 48px; }
 
 .hero h1 { font-size: 32px; margin: 8px 0; }

@@ -222,6 +222,30 @@ window.addEventListener("DOMContentLoaded", async () => {
       `<a href="${CONFIG.EXPLORER}/address/${CONFIG.CONTRACT_ADDRESS}" target="_blank" rel="noopener">${CONFIG.CONTRACT_ADDRESS}</a>`;
   }
   $("connect-btn").addEventListener("click", connectWallet);
+  const heroBtn = $("connect-btn-hero");
+  if (heroBtn) heroBtn.addEventListener("click", connectWallet);
+  const agentBtn = $("agent-btn");
+  if (agentBtn) agentBtn.addEventListener("click", () => {
+    document.getElementById("agent-guide").scrollIntoView({ behavior: "smooth" });
+  });
+  const copyBtn = $("copy-prompt-btn");
+  if (copyBtn) copyBtn.addEventListener("click", async () => {
+    const text = document.getElementById("agent-prompt").textContent;
+    try {
+      await navigator.clipboard.writeText(text);
+      copyBtn.textContent = "Copied ✓";
+    } catch (e) {
+      // Clipboard API unavailable (old browser / non-secure context):
+      // select the text so the user can copy it manually.
+      const range = document.createRange();
+      range.selectNodeContents(document.getElementById("agent-prompt"));
+      const sel = window.getSelection();
+      sel.removeAllRanges();
+      sel.addRange(range);
+      copyBtn.textContent = "Selected — press Ctrl+C";
+    }
+    setTimeout(() => { copyBtn.textContent = "Copy prompt"; }, 3000);
+  });
   $("checkin-btn").addEventListener("click", doCheckIn);
   try {
     await loadAbi();

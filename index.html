@@ -14,6 +14,7 @@
 <header class="top">
   <div class="brand">AgentCheck</div>
   <nav class="nav">
+    <a href="#agent-guide">Agentic Wallet</a>
     <a href="#leaderboard">Leaderboard</a>
     <a href="#how-it-works">How it works</a>
     <a href="https://bscscan.com/address/0x69951ec1e92d9dC5C587cdD672006C04ef32e3D7" target="_blank" rel="noopener">Contract</a>
@@ -27,8 +28,26 @@
     <h1>Daily check-in for Agent ID holders</h1>
     <p class="sub">Hold an Agent ID, check in once a day, build your streak and earn points.
       Check-in is free — you only pay network gas.</p>
+    <div class="steps">
+      <div class="step"><span class="step-n">1</span><div><strong>Claim an Agent ID</strong><span>In the Binance App: Wallet &gt; Agent ID banner. One per user, free except gas.</span></div></div>
+      <div class="step"><span class="step-n">2</span><div><strong>Pick how to check in</strong><span>Browser wallet below, or your AI agent with a Binance Agentic Wallet.</span></div></div>
+      <div class="step"><span class="step-n">3</span><div><strong>Check in once a day</strong><span>Come back every UTC day. Miss a day and your streak restarts at 1.</span></div></div>
+    </div>
     <p id="status" class="status">Connect your wallet to see your streak.</p>
     <p id="tx-link" class="tx-link"></p>
+  </section>
+
+  <section class="options">
+    <div class="option">
+      <h2>Browser wallet</h2>
+      <p class="muted">MetaMask, Binance Web3 Wallet extension, or any injected wallet that holds an Agent ID. The page reads your Agent ID on-chain and lets you check in directly.</p>
+      <button id="connect-btn-hero" class="btn primary">Connect browser wallet</button>
+    </div>
+    <div class="option">
+      <h2>Binance Agentic Wallet</h2>
+      <p class="muted">Your Agent ID lives in your Agentic Wallet, inside the Binance App. Check in through your own AI agent (Binance AI Pro, Claude, Codex, or any agent with the official Binance Skills). No QR code, no pairing code, nothing to paste here.</p>
+      <button id="agent-btn" class="btn">Check in with your AI agent</button>
+    </div>
   </section>
 
   <section class="cards">
@@ -71,6 +90,30 @@
       ever sent without your approval.</p>
   </section>
 
+  <section class="panel" id="agent-guide">
+    <h2>Check in with your AI agent (Binance Agentic Wallet)</h2>
+    <p>Your Agent ID lives in your Agentic Wallet, inside the Binance App. The wallet only signs through your own AI agent — this site never asks you to scan a QR code or enter a pairing code, and it never asks for your seed phrase or private key.</p>
+    <h3>Before you start</h3>
+    <ol>
+      <li>Claim an Agent ID in the Binance App (Wallet &gt; Agent ID banner).</li>
+      <li>Enable <strong>Developer Mode</strong> in the Binance App: Agentic Wallet management page &gt; Settings. It can only be switched on in the App, and it expires — re-enable it when it lapses. Your agent can check with <code>baw wallet settings --json</code> (look for <code>devMode.enabled</code>).</li>
+      <li>Use an AI agent with the official Binance Skills installed — Binance AI Pro in the App, or Claude / Codex / any agent that ran <code>npx skills add binance/binance-skills-hub/skills/binance-web3/binance-agentic-wallet</code>.</li>
+    </ol>
+    <h3>Copy this prompt to your agent</h3>
+    <div class="prompt-block">
+      <pre id="agent-prompt">Check me in to AgentCheck (Agent ID daily check-in) on BNB Smart Chain.
+
+1. First check: is Developer Mode enabled on my Agentic Wallet? Run `baw wallet settings --json` and read devMode.enabled and devMode.expiresAt. If it is disabled or expired, stop and tell me to enable it in the Binance App (Agentic Wallet -&gt; Settings).
+2. Check whether I already checked in today: call hasCheckedInToday(my Agentic Wallet address) on 0x69951ec1e92d9dC5C587cdD672006C04ef32e3D7 (BNB Smart Chain, chain 56). If I already checked in today, stop and tell me.
+3. Preview the check-in: `baw contract-call preview --binanceChainId 56 --from &lt;my Agentic Wallet address&gt; --to 0x69951ec1e92d9dC5C587cdD672006C04ef32e3D7 --value 0 --inputData 0x183ff085 --json`. This calls checkIn() - one daily check-in, no tokens sent, only network gas. The contract is verified on BscScan.
+4. Show me the preview and wait for my explicit confirmation. Do not execute before I confirm.
+5. After I confirm, run `baw contract-call execute --requestId &lt;requestId from the preview&gt; --json` and show me the transaction hash.
+6. Verify on-chain that my streak and points updated, and show me my new streak. You can check the leaderboard at https://agentcheck-hazel.vercel.app/</pre>
+      <button id="copy-prompt-btn" class="btn">Copy prompt</button>
+    </div>
+    <p class="muted">Your agent previews the transaction first, you confirm it in the Binance App, and only then it is sent. Nothing executes without your confirmation. Check-in costs only network gas.</p>
+  </section>
+
   <section class="panel" id="leaderboard">
     <h2>Leaderboard</h2>
     <p class="muted">Ranked by points, then by streak. Built from on-chain check-in events.</p>
@@ -86,11 +129,19 @@
 
   <section class="panel" id="how-it-works">
     <h2>How it works</h2>
+    <h3>Option 1 — Browser wallet</h3>
     <ol>
       <li>Claim an Agent ID in the Binance app (Wallet &gt; Agent ID). One per user, non-transferable.</li>
       <li>Connect your wallet here. The page reads your Agent ID directly from the Agent ID contract on BNB Chain.</li>
       <li>Press “Check in now” and confirm in your wallet. The contract records your streak and points on-chain.</li>
       <li>Come back every day. Miss a day and your streak restarts at 1.</li>
+    </ol>
+    <h3>Option 2 — Binance Agentic Wallet (via your AI agent)</h3>
+    <ol>
+      <li>Claim an Agent ID and enable Developer Mode in the Binance App (Agentic Wallet &gt; Settings).</li>
+      <li>Copy the prompt in the <a href="#agent-guide">agent guide</a> above and paste it to your AI agent (Binance AI Pro, Claude, Codex, or any agent with the official Binance Skills).</li>
+      <li>Your agent checks Developer Mode, checks whether you already checked in today, previews the check-in, and waits for your confirmation.</li>
+      <li>Confirm in the Binance App. Your streak appears on the leaderboard here.</li>
     </ol>
     <p class="muted">AgentCheck holds no funds and collects no personal data. There is no
       server, no login, and no QR code sign-in. The contract has no payable
