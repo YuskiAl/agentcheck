@@ -11,64 +11,59 @@
 <script src="app.js" defer></script>
 </head>
 <body>
-<header class="top">
-  <div class="brand">AgentCheck</div>
-  <nav class="nav">
-    <a href="#agent-guide">Agentic Wallet</a>
-    <a href="#leaderboard">Leaderboard</a>
-    <a href="#how-it-works">How it works</a>
-    <a href="https://bscscan.com/address/0x69951ec1e92d9dC5C587cdD672006C04ef32e3D7" target="_blank" rel="noopener">Contract</a>
-  </nav>
-  <button id="connect-btn" class="btn primary">Connect wallet</button>
+<header class="site-header">
+  <div class="container header-inner">
+    <a class="brand" href="#" aria-label="AgentCheck — back to top"><span class="brand-mark" aria-hidden="true"></span>AgentCheck</a>
+    <nav class="nav" aria-label="Primary">
+      <a href="#how-it-works">How it works</a>
+      <a href="#leaderboard">Leaderboard</a>
+      <a href="https://bscscan.com/address/0x69951ec1e92d9dC5C587cdD672006C04ef32e3D7" target="_blank" rel="noopener">Contract</a>
+    </nav>
+    <button id="connect-btn" class="btn primary js-connect" type="button">Connect wallet</button>
+  </div>
 </header>
 
-<main>
+<main class="container">
   <section class="hero">
-    <p class="badge"><span class="dot"></span> LIVE ON BNB CHAIN</p>
+    <p class="badge"><span class="dot" aria-hidden="true"></span> LIVE ON BNB CHAIN</p>
     <h1>Daily check-in for Agent ID holders</h1>
     <p class="sub">Hold an Agent ID, check in once a day, build your streak and earn points.
       Check-in is free — you only pay network gas.</p>
-    <div class="steps">
-      <div class="step"><span class="step-n">1</span><div><strong>Claim an Agent ID</strong><span>In the Binance App: Wallet &gt; Agent ID banner. One per user, free except gas.</span></div></div>
-      <div class="step"><span class="step-n">2</span><div><strong>Pick how to check in</strong><span>Browser wallet below, or your AI agent with a Binance Agentic Wallet.</span></div></div>
-      <div class="step"><span class="step-n">3</span><div><strong>Check in once a day</strong><span>Come back every UTC day. Miss a day and your streak restarts at 1.</span></div></div>
+    <div class="hero-actions">
+      <button id="connect-btn-hero" class="btn primary btn-lg js-connect" type="button">Connect browser wallet</button>
+      <button id="agent-btn" class="btn btn-lg" type="button">Check in with your AI agent</button>
     </div>
-    <p id="status" class="status">Connect your wallet to see your streak.</p>
+    <p id="status" class="status" role="status" aria-live="polite">Connect your wallet to see your streak.</p>
     <p id="tx-link" class="tx-link"></p>
   </section>
 
-  <section class="options">
-    <div class="option">
-      <h2>Browser wallet</h2>
-      <p class="muted">MetaMask, Binance Web3 Wallet extension, or any injected wallet that holds an Agent ID. The page reads your Agent ID on-chain and lets you check in directly.</p>
-      <button id="connect-btn-hero" class="btn primary">Connect browser wallet</button>
+  <section class="methods" aria-labelledby="methods-title">
+    <div class="section-head">
+      <h2 id="methods-title">Two ways to check in</h2>
+      <p class="muted">Pick the one that fits your wallet. Both write the same on-chain check-in.</p>
     </div>
-    <div class="option">
-      <h2>Binance Agentic Wallet</h2>
-      <p class="muted">Your Agent ID lives in your Agentic Wallet, inside the Binance App. Check in through your own AI agent (Binance AI Pro, Claude, Codex, or any agent with the official Binance Skills). No QR code, no pairing code, nothing to paste here.</p>
-      <button id="agent-btn" class="btn">Check in with your AI agent</button>
-    </div>
-  </section>
-
-  <section class="cards">
-    <div class="card">
-      <div class="label">Total Agent ID holders checked in</div>
-      <div class="value" id="stat-users">—</div>
-    </div>
-    <div class="card">
-      <div class="label">Total check-ins</div>
-      <div class="value" id="stat-checkins">—</div>
-    </div>
-    <div class="card">
-      <div class="label">Contract</div>
-      <div class="value small" id="contract-address">Not deployed yet</div>
+    <div class="methods-grid">
+      <article class="method-card">
+        <div class="method-icon" aria-hidden="true">◈</div>
+        <h3>Browser wallet</h3>
+        <p class="muted">MetaMask, Binance Web3 Wallet extension, or any injected wallet that holds an Agent ID. The page reads your Agent ID on-chain and lets you check in directly.</p>
+        <button class="btn primary js-connect" type="button">Connect browser wallet</button>
+      </article>
+      <article class="method-card">
+        <div class="method-icon" aria-hidden="true">✦</div>
+        <h3>Binance Agentic Wallet</h3>
+        <p class="muted">Your Agent ID lives in your Agentic Wallet, inside the Binance App. Check in through your own AI agent (Binance AI Pro, Claude, Codex, or any agent with the official Binance Skills). No QR code, no pairing code, nothing to paste here.</p>
+        <a class="btn" href="#agent-guide">See the agent guide</a>
+      </article>
     </div>
   </section>
 
-  <section id="user-panel" class="panel hidden">
-    <h2>Your check-in</h2>
-    <p>Wallet: <code id="wallet-address">—</code></p>
-    <p>Agent ID status: <span id="agent-status">—</span></p>
+  <section id="user-panel" class="panel user-panel hidden" aria-labelledby="user-panel-title">
+    <h2 id="user-panel-title">Your check-in</h2>
+    <dl class="user-meta">
+      <div><dt>Wallet</dt><dd><code id="wallet-address">—</code></dd></div>
+      <div><dt>Agent ID status</dt><dd><span id="agent-status">—</span></dd></div>
+    </dl>
     <div class="cards">
       <div class="card">
         <div class="label">Current streak (days)</div>
@@ -83,18 +78,78 @@
         <div class="value" id="user-total">—</div>
       </div>
     </div>
-    <button id="checkin-btn" class="btn primary big" disabled>Check in now</button>
+    <button id="checkin-btn" class="btn primary btn-lg" type="button" disabled>Check in now</button>
     <p class="muted">Rules: one check-in per wallet per UTC day. Check in on consecutive
       days to grow your streak. Every 7-day streak earns a +5 point bonus.
       Your wallet always asks you to confirm the transaction — nothing is
       ever sent without your approval.</p>
   </section>
 
-  <section class="panel" id="agent-guide">
-    <h2>Check in with your AI agent (Binance Agentic Wallet)</h2>
-    <p>Your Agent ID lives in your Agentic Wallet, inside the Binance App. The wallet only signs through your own AI agent — this site never asks you to scan a QR code or enter a pairing code, and it never asks for your seed phrase or private key.</p>
+  <section class="stats" id="global-stats" aria-labelledby="stats-title">
+    <div class="section-head">
+      <h2 id="stats-title">Live on BNB Chain</h2>
+      <p class="muted">Read directly from the contract — no server in between.</p>
+    </div>
+    <div class="cards stats-grid">
+      <div class="card">
+        <div class="label">Total Agent ID holders checked in</div>
+        <div class="value is-loading" id="stat-users">—</div>
+      </div>
+      <div class="card">
+        <div class="label">Total check-ins</div>
+        <div class="value is-loading" id="stat-checkins">—</div>
+      </div>
+    </div>
+  </section>
+
+  <section class="panel leaderboard-panel" id="leaderboard" aria-labelledby="leaderboard-title">
+    <div class="section-head">
+      <h2 id="leaderboard-title">Leaderboard</h2>
+      <p class="muted">Ranked by points, then by streak. Built from on-chain check-in events.</p>
+    </div>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th scope="col">#</th><th scope="col">Wallet</th><th scope="col" class="num">Streak</th><th scope="col" class="num">Points</th></tr>
+        </thead>
+        <tbody id="leaderboard-body">
+          <tr><td colspan="4" class="muted">Loading…</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section class="panel" id="how-it-works" aria-labelledby="how-title">
+    <h2 id="how-title">How it works</h2>
+    <div class="how-grid">
+      <div>
+        <h3>Option 1 — Browser wallet</h3>
+        <ol class="steps-list">
+          <li>Claim an Agent ID in the Binance app (Wallet &gt; Agent ID). One per user, non-transferable.</li>
+          <li>Connect your wallet here. The page reads your Agent ID directly from the Agent ID contract on BNB Chain.</li>
+          <li>Press “Check in now” and confirm in your wallet. The contract records your streak and points on-chain.</li>
+          <li>Come back every day. Miss a day and your streak restarts at 1.</li>
+        </ol>
+      </div>
+      <div>
+        <h3>Option 2 — Binance Agentic Wallet (via your AI agent)</h3>
+        <ol class="steps-list">
+          <li>Claim an Agent ID and enable Developer Mode in the Binance App (Agentic Wallet &gt; Settings).</li>
+          <li>Copy the prompt in the <a href="#agent-guide">agent guide</a> below and paste it to your AI agent (Binance AI Pro, Claude, Codex, or any agent with the official Binance Skills).</li>
+          <li>Your agent checks Developer Mode, checks whether you already checked in today, previews the check-in, and waits for your confirmation.</li>
+          <li>Confirm in the Binance App. Your streak appears on the leaderboard here.</li>
+        </ol>
+      </div>
+    </div>
+  </section>
+
+  <section class="panel agent-panel" id="agent-guide" aria-labelledby="agent-title">
+    <div class="section-head">
+      <h2 id="agent-title">Check in with your AI agent (Binance Agentic Wallet)</h2>
+      <p class="muted">Your Agent ID lives in your Agentic Wallet, inside the Binance App. The wallet only signs through your own AI agent — this site never asks you to scan a QR code or enter a pairing code, and it never asks for your seed phrase or private key.</p>
+    </div>
     <h3>Before you start</h3>
-    <ol>
+    <ol class="steps-list">
       <li>Claim an Agent ID in the Binance App (Wallet &gt; Agent ID banner).</li>
       <li>Enable <strong>Developer Mode</strong> in the Binance App: Agentic Wallet management page &gt; Settings. It can only be switched on in the App, and it expires — re-enable it when it lapses. Your agent can check with <code>baw wallet settings --json</code> (look for <code>devMode.enabled</code>).</li>
       <li>Use an AI agent with the official Binance Skills installed — Binance AI Pro in the App, or Claude / Codex / any agent that ran <code>npx skills add binance/binance-skills-hub/skills/binance-web3/binance-agentic-wallet</code>.</li>
@@ -109,50 +164,34 @@
 4. Show me the preview and wait for my explicit confirmation. Do not execute before I confirm.
 5. After I confirm, run `baw contract-call execute --requestId &lt;requestId from the preview&gt; --json` and show me the transaction hash.
 6. Verify on-chain that my streak and points updated, and show me my new streak. You can check the leaderboard at https://agentcheck-hazel.vercel.app/</pre>
-      <button id="copy-prompt-btn" class="btn">Copy prompt</button>
+      <div class="prompt-actions">
+        <button id="copy-prompt-btn" class="btn primary" type="button">Copy prompt</button>
+        <p id="copy-status" class="copy-status" role="status" aria-live="polite"></p>
+      </div>
     </div>
     <p class="muted">Your agent previews the transaction first, you confirm it in the Binance App, and only then it is sent. Nothing executes without your confirmation. Check-in costs only network gas.</p>
   </section>
-
-  <section class="panel" id="leaderboard">
-    <h2>Leaderboard</h2>
-    <p class="muted">Ranked by points, then by streak. Built from on-chain check-in events.</p>
-    <table>
-      <thead>
-        <tr><th>#</th><th>Wallet</th><th>Streak</th><th>Points</th></tr>
-      </thead>
-      <tbody id="leaderboard-body">
-        <tr><td colspan="4" class="muted">Loading…</td></tr>
-      </tbody>
-    </table>
-  </section>
-
-  <section class="panel" id="how-it-works">
-    <h2>How it works</h2>
-    <h3>Option 1 — Browser wallet</h3>
-    <ol>
-      <li>Claim an Agent ID in the Binance app (Wallet &gt; Agent ID). One per user, non-transferable.</li>
-      <li>Connect your wallet here. The page reads your Agent ID directly from the Agent ID contract on BNB Chain.</li>
-      <li>Press “Check in now” and confirm in your wallet. The contract records your streak and points on-chain.</li>
-      <li>Come back every day. Miss a day and your streak restarts at 1.</li>
-    </ol>
-    <h3>Option 2 — Binance Agentic Wallet (via your AI agent)</h3>
-    <ol>
-      <li>Claim an Agent ID and enable Developer Mode in the Binance App (Agentic Wallet &gt; Settings).</li>
-      <li>Copy the prompt in the <a href="#agent-guide">agent guide</a> above and paste it to your AI agent (Binance AI Pro, Claude, Codex, or any agent with the official Binance Skills).</li>
-      <li>Your agent checks Developer Mode, checks whether you already checked in today, previews the check-in, and waits for your confirmation.</li>
-      <li>Confirm in the Binance App. Your streak appears on the leaderboard here.</li>
-    </ol>
-    <p class="muted">AgentCheck holds no funds and collects no personal data. There is no
-      server, no login, and no QR code sign-in. The contract has no payable
-      functions and no withdrawal function. The only owner permission is
-      pause/unpause for emergencies — see the README for the full disclosure.</p>
-  </section>
 </main>
 
-<footer>
-  <p>AgentCheck — built for the Agent ID Hackathon. Not affiliated with Binance.
-    Check-in costs only network gas; no returns or rewards are promised.</p>
+<footer class="site-footer">
+  <div class="container">
+    <div class="trust-grid">
+      <div>
+        <h3>Contract</h3>
+        <p><code id="contract-address">Not deployed yet</code></p>
+        <p><a href="https://bscscan.com/address/0x69951ec1e92d9dC5C587cdD672006C04ef32e3D7" target="_blank" rel="noopener">View on BscScan ↗</a></p>
+      </div>
+      <div>
+        <h3>Safety</h3>
+        <p>AgentCheck holds no funds and collects no personal data. There is no server, no login, and no QR code sign-in. The contract has no payable functions and no withdrawal function. The only owner permission is pause/unpause for emergencies — see the README for the full disclosure.</p>
+      </div>
+      <div>
+        <h3>Cost</h3>
+        <p>Check-in costs only network gas. No returns or rewards are promised.</p>
+      </div>
+    </div>
+    <p class="footer-line">AgentCheck — built for the Agent ID Hackathon. Not affiliated with Binance.</p>
+  </div>
 </footer>
 </body>
 </html>

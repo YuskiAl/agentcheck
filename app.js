@@ -58,6 +58,12 @@ async function loadGlobalStats() {
     $("stat-checkins").textContent = total.toString();
   } catch (e) {
     console.error("global stats failed", e);
+    // Honest empty state: no invented numbers, just say it is unavailable.
+    $("stat-users").textContent = "Unavailable";
+    $("stat-checkins").textContent = "Unavailable";
+  } finally {
+    $("stat-users").classList.remove("is-loading");
+    $("stat-checkins").classList.remove("is-loading");
   }
 }
 
@@ -145,7 +151,7 @@ async function loadLeaderboard() {
     ).join("");
   } catch (e) {
     console.error("leaderboard failed", e);
-    body.innerHTML = "<tr><td colspan=\"4\" class=\"muted\">Leaderboard could not load (public RPC busy). Retry in a moment.</td></tr>";
+    body.innerHTML = "<tr><td colspan=\"4\" class=\"muted\">Leaderboard could not load (public RPC busy). <button type=\"button\" class=\"btn-link\" data-action=\"retry-leaderboard\">Retry</button></td></tr>";
   }
 }
 
@@ -171,7 +177,9 @@ async function connectWallet() {
     }
     signer = await walletProvider.getSigner();
     userAddress = accounts[0];
-    $("connect-btn").textContent = "Connected: " + shortAddr(userAddress);
+    document.querySelectorAll(".js-connect").forEach((b) => {
+      b.textContent = "Connected: " + shortAddr(userAddress);
+    });
     $("wallet-address").textContent = userAddress;
     $("user-panel").classList.remove("hidden");
     if (!isDeployed()) {
@@ -221,19 +229,24 @@ window.addEventListener("DOMContentLoaded", async () => {
     $("contract-address").innerHTML =
       `<a href="${CONFIG.EXPLORER}/address/${CONFIG.CONTRACT_ADDRESS}" target="_blank" rel="noopener">${CONFIG.CONTRACT_ADDRESS}</a>`;
   }
-  $("connect-btn").addEventListener("click", connectWallet);
-  const heroBtn = $("connect-btn-hero");
-  if (heroBtn) heroBtn.addEventListener("click", connectWallet);
+  document.querySelectorAll(".js-connect").forEach((b) =>
+    b.addEventListener("click", connectWallet)
+  );
   const agentBtn = $("agent-btn");
   if (agentBtn) agentBtn.addEventListener("click", () => {
-    document.getElementById("agent-guide").scrollIntoView({ behavior: "smooth" });
+    const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    document.getElementById("agent-guide").scrollIntoView({
+      behavior: reduceMotion ? "auto" : "smooth",
+    });
   });
   const copyBtn = $("copy-prompt-btn");
+  const copyStatus = $("copy-status");
   if (copyBtn) copyBtn.addEventListener("click", async () => {
     const text = document.getElementById("agent-prompt").textContent;
     try {
       await navigator.clipboard.writeText(text);
       copyBtn.textContent = "Copied ✓";
+      if (copyStatus) copyStatus.textContent = "Prompt copied to clipboard.";
     } catch (e) {
       // Clipboard API unavailable (old browser / non-secure context):
       // select the text so the user can copy it manually.
@@ -243,8 +256,20 @@ window.addEventListener("DOMContentLoaded", async () => {
       sel.removeAllRanges();
       sel.addRange(range);
       copyBtn.textContent = "Selected — press Ctrl+C";
+      if (copyStatus) copyStatus.textContent = "Prompt selected — press Ctrl+C to copy.";
     }
-    setTimeout(() => { copyBtn.textContent = "Copy prompt"; }, 3000);
+    setTimeout(() => {
+      copyBtn.textContent = "Copy prompt";
+      if (copyStatus) copyStatus.textContent = "";
+    }, 3000);
+  });
+  // Leaderboard retry (delegated: the button only exists in the error row).
+  $("leaderboard-body").addEventListener("click", async (e) => {
+    if (e.target && e.target.dataset.action === "retry-leaderboard") {
+      $("leaderboard-body").innerHTML =
+        "<tr><td colspan=\"4\" class=\"muted\">Loading…</td></tr>";
+      await loadLeaderboard();
+    }
   });
   $("checkin-btn").addEventListener("click", doCheckIn);
   try {
