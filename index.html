@@ -13,11 +13,17 @@
 <body>
 <header class="top">
   <div class="brand">AgentCheck</div>
+  <nav class="nav">
+    <a href="#leaderboard">Leaderboard</a>
+    <a href="#how-it-works">How it works</a>
+    <a href="https://bscscan.com/address/0x69951ec1e92d9dC5C587cdD672006C04ef32e3D7" target="_blank" rel="noopener">Contract</a>
+  </nav>
   <button id="connect-btn" class="btn primary">Connect wallet</button>
 </header>
 
 <main>
   <section class="hero">
+    <p class="badge"><span class="dot"></span> LIVE ON BNB CHAIN</p>
     <h1>Daily check-in for Agent ID holders</h1>
     <p class="sub">Hold an Agent ID, check in once a day, build your streak and earn points.
       Check-in is free — you only pay network gas.</p>
@@ -65,7 +71,7 @@
       ever sent without your approval.</p>
   </section>
 
-  <section class="panel">
+  <section class="panel" id="leaderboard">
     <h2>Leaderboard</h2>
     <p class="muted">Ranked by points, then by streak. Built from on-chain check-in events.</p>
     <table>
@@ -78,7 +84,7 @@
     </table>
   </section>
 
-  <section class="panel">
+  <section class="panel" id="how-it-works">
     <h2>How it works</h2>
     <ol>
       <li>Claim an Agent ID in the Binance app (Wallet &gt; Agent ID). One per user, non-transferable.</li>

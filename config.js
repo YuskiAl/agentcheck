@@ -13,8 +13,7 @@ const CONFIG = {
   AGENT_ID_ADDRESS: "0x60B9262456dE011F7d15a54CdD8c48bAaa8B022F",
   AGENT_ID_ABI: ["function balanceOf(address owner) view returns (uint256)"],
 
-  // Mainnet deployment, 19 Nov 2026 — deployed by user via Remix (MetaMask,
-  // new wallet 0x6d52cee2b08c7190e99d681092283f6cdd49f7f6). Creation tx
+  // Mainnet deployment, 19 Nov 2026. Creation tx
   // 0x1a7db67b216d4c398abc8888c9f5497aaeee187c4d32c94a842da27d9e8802f4.
   CONTRACT_ADDRESS: "0x69951ec1e92d9dC5C587cdD672006C04ef32e3D7",
   // First block to scan for CheckIn events (deployment block). 0 = genesis
